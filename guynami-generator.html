@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GUYNAMI GENERATOR</title>
+  <style>
+    :root{--bg1:#ffffff;--bg2:#ff8a00;--card:#ffffffcc;--accent:#ff6b6b;--muted:#4b4b4b;--glass:rgba(255,255,255,0.5)}
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 100%);color:#2b2b2b}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px}
+    .card{width:100%;max-width:720px;background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));border-radius:14px;padding:28px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 8px 30px rgba(0,0,0,0.08)}
+    h1{margin:0 0 8px;font-size:28px;letter-spacing:1px;color:#ff6200}
+    p.lead{margin:0 0 20px;color:var(--muted)}
+    .form{display:grid;grid-template-columns:1fr 160px;gap:12px;margin-bottom:18px}
+    .full{grid-column:1/-1}
+    input[type=text],select{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:#fff;color:inherit}
+    button{padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--bg2),#ffb56b);color:white;font-weight:600;cursor:pointer}
+    .result{margin-top:18px;padding:16px;border-radius:10px;background:var(--glass);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-direction:column;align-items:flex-start}
+    .tag{font-size:14px;color:var(--muted)}
+    .output{font-size:20px;font-weight:700;color:#2b2b2b;word-break:break-word}
+    .small{font-size:13px;color:var(--muted)}
+    .actions{display:flex;gap:8px;margin-top:8px}
+    .note{margin-top:12px;color:var(--muted);font-size:13px}
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+    @media (max-width:640px){.form{grid-template-columns:1fr;}.card{padding:18px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="region" aria-label="Guyanami generator">
+      <h1>GUYNAMI GENERATOR</h1>
+      <p class="lead">Give it a name and choose a gender — this generator will produce your GUYNAMI following the rules.</p>
+
+      <div class="form" id="form">
+        <input type="text" id="fullname" placeholder="Full name (e.g. Ryan Gonzales)" aria-label="Full name" />
+        <select id="gender" aria-label="Select gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+
+        <div class="full">
+          <button id="generate">Generate GUYNAMI</button>
+        </div>
+      </div>
+
+      <div class="result" id="result" style="display:none">
+        <div>
+          <div class="tag">Generated name</div>
+          <div class="output" id="output"></div>
+          <div class="small" id="explain"></div>
+        </div>
+        <div class="actions">
+          <button id="copy">Copy</button>
+          <button id="download">Download</button>
+        </div>
+      </div>
+
+      <div class="note">Rules: <strong>male</strong> =&gt; <code>prefix + "guy" + firstName + suffix</code>; <strong>female</strong> =&gt; <code>prefix + "girl" + firstName + suffix</code>; <strong>other</strong> =&gt; <code>prefix repeated twice + firstName + suffix</code>. Prefix uses first two letters or up to first vowel if no vowel in first two letters. If first name ends in a vowel, suffix is "yami"; otherwise "ami".</div>
+      <footer>Tip: Prefix comes from the <strong>first name</strong>. Short names use full name as prefix.</footer>
+    </div>
+  </div>
+
+  <script>
+    function firstTwoWithVowel(name){
+      const cleaned = name.trim();
+      if(!cleaned) return '';
+      const firstTwo = cleaned.slice(0,2);
+      if(/[aeiouAEIOU]/.test(firstTwo)) return firstTwo;
+      const match = cleaned.match(/[aeiouAEIOU]/);
+      return match ? cleaned.slice(0, match.index + 1) : firstTwo;
+    }
+
+    function makeGuyanami(fullName, gender){
+      const nameTrim = fullName.trim();
+      if(!nameTrim) return '';
+      const firstName = nameTrim.split(/\s+/)[0];
+      const prefix = firstTwoWithVowel(firstName);
+      const lastChar = firstName.slice(-1).toLowerCase();
+      const suffix = /[aeiou]/.test(lastChar) ? 'yami' : 'ami';
+      switch(gender){
+        case 'male':
+          return prefix + 'guy' + firstName + suffix;
+        case 'female':
+          return prefix + 'girl' + firstName + suffix;
+        default:
+          return prefix + prefix + firstName + suffix;
+      }
+    }
+
+    const genBtn = document.getElementById('generate');
+    const outWrap = document.getElementById('result');
+    const out = document.getElementById('output');
+    const explain = document.getElementById('explain');
+    const copyBtn = document.getElementById('copy');
+    const downloadBtn = document.getElementById('download');
+
+    genBtn.addEventListener('click', ()=>{
+      const nameInput = document.getElementById('fullname');
+      const name = nameInput.value.trim();
+      if(!name){ alert('Please enter a full name.'); return; }
+      const gender = document.getElementById('gender').value;
+      const generated = makeGuyanami(name, gender);
+      out.textContent = generated;
+      explain.textContent = `(prefix: "${firstTwoWithVowel(name.split(/\s+/)[0])}" — rule: ${gender})`;
+      outWrap.style.display = 'flex';
+    });
+
+    copyBtn.addEventListener('click', ()=>{
+      const text = out.textContent;
+      if(!text) return;
+      navigator.clipboard.writeText(text).then(()=>{ copyBtn.textContent='Copied!'; setTimeout(()=>copyBtn.textContent='Copy',1200); }).catch(()=>{ alert('Copy failed — select and copy manually.'); });
+    });
+
+    downloadBtn.addEventListener('click', ()=>{
+      const text = out.textContent;
+      if(!text) return;
+      const blob = new Blob([text], {type:'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download=text+'.txt'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('fullname').addEventListener('keydown', (e)=>{ if(e.key==='Enter') genBtn.click(); });
+  </script>
+</body>
+</html>
