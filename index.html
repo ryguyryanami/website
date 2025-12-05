@@ -55,6 +55,8 @@
           <button id="copy">Copy</button>
           <button id="download">Download</button>
         </div>
+        <!-- New counter display -->
+        <div class="small" id="counter">Names generated: 0</div>
       </div>
 
       <div class="note">Rules: <strong>male</strong> =&gt; <code>prefix + "guy" + firstName + suffix</code>; <strong>female</strong> =&gt; <code>prefix + "girl" + firstName + suffix</code>; <strong>other</strong> =&gt; <code>prefix repeated twice + firstName + suffix</code>. Prefix uses first two letters or up to first vowel if no vowel in first two letters. If first name ends in a vowel, suffix is "yami"; otherwise "ami".</div>
@@ -63,6 +65,8 @@
   </div>
 
   <script>
+    let nameCounter = 0; // Global counter
+
     function firstTwoWithVowel(name){
       const cleaned = name.trim();
       if(!cleaned) return '';
@@ -95,6 +99,7 @@
     const explain = document.getElementById('explain');
     const copyBtn = document.getElementById('copy');
     const downloadBtn = document.getElementById('download');
+    const counterDisplay = document.getElementById('counter');
 
     genBtn.addEventListener('click', ()=>{
       const nameInput = document.getElementById('fullname');
@@ -102,15 +107,23 @@
       if(!name){ alert('Please enter a full name.'); return; }
       const gender = document.getElementById('gender').value;
       const generated = makeGuyanami(name, gender);
+      
       out.textContent = generated;
       explain.textContent = `(prefix: "${firstTwoWithVowel(name.split(/\s+/)[0])}" — rule: ${gender})`;
       outWrap.style.display = 'flex';
+
+      // Increment global counter
+      nameCounter++;
+      counterDisplay.textContent = `Names generated: ${nameCounter}`;
     });
 
     copyBtn.addEventListener('click', ()=>{
       const text = out.textContent;
       if(!text) return;
-      navigator.clipboard.writeText(text).then(()=>{ copyBtn.textContent='Copied!'; setTimeout(()=>copyBtn.textContent='Copy',1200); }).catch(()=>{ alert('Copy failed — select and copy manually.'); });
+      navigator.clipboard.writeText(text).then(()=>{
+        copyBtn.textContent='Copied!';
+        setTimeout(()=>copyBtn.textContent='Copy',1200);
+      }).catch(()=>{ alert('Copy failed — select and copy manually.'); });
     });
 
     downloadBtn.addEventListener('click', ()=>{
