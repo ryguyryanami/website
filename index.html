@@ -16,6 +16,8 @@
             font-family: 'Inter', sans-serif;
             background-color: #ffffff; /* White background */
             color: #1f2937; /* Dark text (gray-800) */
+            /* Ensure the body does not allow horizontal overflow */
+            overflow-x: hidden;
         }
         .hero-bg {
             /* Using a slightly darker placeholder image for contrast */
@@ -82,8 +84,9 @@
                     <!-- EP Artwork & Player Embed (Only the Bandcamp embed remains) -->
                     <div class="flex flex-col items-center">
                         <!-- BANDCAMP EMBED CODE -->
-                        <div class="w-full max-w-sm">
-                            <iframe style="border: 0; width: 100%; max-width: 350px; height: 470px;" 
+                        <!-- Added overflow-x-auto to the container to safely handle the fixed width iframe on small screens -->
+                        <div class="w-full max-w-sm overflow-x-auto"> 
+                            <iframe style="border: 0; width: 350px; height: 470px;" 
                                 src="https://bandcamp.com/EmbeddedPlayer/album=1161608372/size=large/bgcol=ffffff/linkcol=e99708/tracklist=false/transparent=true/" 
                                 seamless>
                                 <a href="https://ryguyryanami.bandcamp.com/album/all-i-ever-wanted-ep">All I Ever Wanted EP by Ryguy Ryanami</a>
