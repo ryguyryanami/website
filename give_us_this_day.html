@@ -1,121 +1,382 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Meditation Player</title>
-<style>
-    body {
-        background: black;
-        color: white;
-        font-family: Arial, sans-serif;
-        text-align: center;
-        padding-top: 40px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Give Us This Day - Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap');
 
-    #playBtn {
-        padding: 14px 24px;
-        font-size: 20px;
-        cursor: pointer;
-    }
-
-    #visualizer {
-        margin: 40px auto;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        background: radial-gradient(circle, #666, #111);
-        animation: pulse 3s infinite ease-in-out;
-        display: none;
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); opacity: 0.7; }
-        50% { transform: scale(1.3); opacity: 1; }
-        100% { transform: scale(1); opacity: 0.7; }
-    }
-
-    #verse {
-        margin-top: 40px;
-        font-size: 28px;
-        line-height: 1.4;
-        display: none;
-        max-width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-</style>
-</head>
-<body>
-
-<button id="playButton">Play</button>
-
-<audio id="song">
-    <source src="give_us_this_day.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-document.getElementById("playButton").addEventListener("click", () => {
-    const audio = document.getElementById("song");
-
-    audio.load(); // ensures browser reads the file fresh
-
-    audio.play().then(() => {
-        console.log("Audio playback started successfully.");
-    }).catch(err => {
-        console.error("Audio error:", err);
-        alert("Cannot play audio. Browser blocked it or file not found.");
-    });
-});
-</script>
-    
-<div id="visualizer"></div>
-<div id="verse"></div>
-
-<script>
-const verses = [
-    "Our Father, who art in heaven,",
-    "Hallowed be thy name.",
-    "Thy kingdom come.",
-    "Thy will be done on Earth as it is in heaven.",
-    "Give us this day our daily bread,",
-    "And forgive us our trespasses,",
-    "As we forgive those who trespass against us.",
-    "And lead us not into temptation,",
-    "But deliver us from evil.",
-    "For thine is the kingdom, the power, and the glory,",
-    "Forever and ever. Amen."
-];
-
-const totalTime = 100000; // 1m40s
-const verseTime = totalTime / verses.length;
-
-const playBtn = document.getElementById("playBtn");
-const audio = document.getElementById("audio");
-const visualizer = document.getElementById("visualizer");
-const verseBox = document.getElementById("verse");
-
-playBtn.addEventListener("click", () => {
-    audio.play(); // This WILL work because it's triggered by clicking THE BUTTON THAT CONTAINS THE AUDIO
-    playBtn.style.display = "none";
-    visualizer.style.display = "block";
-    verseBox.style.display = "block";
-    startVerses();
-});
-
-function startVerses() {
-    let index = 0;
-    verseBox.innerHTML = verses[index];
-
-    const interval = setInterval(() => {
-        index++;
-        if (index >= verses.length) {
-            clearInterval(interval);
-            return;
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'Lato', sans-serif;
+            overflow: hidden;
         }
-        verseBox.innerHTML = verses[index];
-    }, verseTime);
-}
-</script>
 
+        /* Custom glow effect for the text */
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(100, 200, 255, 0.3);
+        }
+        
+        /* Smooth fade transition for lyrics */
+        .lyric-line {
+            transition: opacity 1s ease-in-out, transform 1s ease-out;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .lyric-line.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #visualizer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        #content-layer {
+            position: relative;
+            z-index: 10;
+        }
+        
+        .control-btn {
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col items-center justify-between py-10 relative">
+
+    <!-- Canvas for Audio Visualization -->
+    <canvas id="visualizer"></canvas>
+
+    <!-- Main Content -->
+    <div id="content-layer" class="flex flex-col items-center justify-center w-full h-full max-w-4xl mx-auto px-4">
+        
+        <!-- Title -->
+        <header class="text-center mb-10 opacity-80 hover:opacity-100 transition-opacity">
+            <h1 class="text-3xl md:text-5xl font-bold font-[Cinzel] tracking-widest text-indigo-300 text-glow">
+                GIVE US THIS DAY
+            </h1>
+        </header>
+
+        <!-- Lyrics Container -->
+        <div id="lyrics-container" class="flex-grow flex items-center justify-center w-full text-center">
+            <p id="current-verse" class="lyric-line text-2xl md:text-4xl leading-relaxed font-light text-white drop-shadow-lg max-w-3xl">
+                Press Play to Begin
+            </p>
+        </div>
+
+        <!-- Controls -->
+        <div class="w-full mt-10">
+            <!-- Progress Bar -->
+            <div class="w-full bg-gray-800 h-1.5 rounded-full mb-6 cursor-pointer overflow-hidden relative group" id="progress-container">
+                <div id="progress-bar" class="bg-indigo-500 h-full w-0 shadow-[0_0_10px_rgba(99,102,241,0.7)]"></div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex flex-col items-center gap-4">
+                <div class="flex gap-6">
+                    <button id="btn-restart" class="control-btn bg-white/10 border border-white/20 rounded-full p-4 hover:bg-white/20" title="Restart">
+                        <!-- Restart Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+                    </button>
+
+                    <button id="btn-play-pause" class="control-btn bg-indigo-600/80 border border-indigo-400/30 rounded-full p-6 hover:bg-indigo-500 shadow-lg shadow-indigo-900/50" title="Play/Pause">
+                        <!-- Play Icon -->
+                        <svg id="icon-play" class="block" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        <!-- Pause Icon -->
+                        <svg id="icon-pause" class="hidden" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                    </button>
+                </div>
+                
+                <!-- Fallback File Input -->
+                <div class="mt-4 opacity-50 hover:opacity-100 transition-opacity text-xs text-center">
+                    <label for="file-upload" class="cursor-pointer underline text-gray-400 hover:text-indigo-300">
+                        File not loading? Click here to select 'give_us_this_day.mp3' manually
+                    </label>
+                    <input type="file" id="file-upload" accept="audio/*" class="hidden">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Audio Element -->
+    <!-- Added crossOrigin="anonymous" to allow visualizer to work with external URLs (like GitHub) -->
+    <!-- Added onerror handler inline as a first line of defense -->
+    <audio id="audio" src="give_us_this_day.mp3" crossOrigin="anonymous" preload="auto"></audio>
+
+    <script>
+        // --- Configuration ---
+        const TOTAL_DURATION_SEC = 100;
+        
+        // Verses mapped to seconds (approximate pacing for 100s)
+        const VERSES = [
+            { start: 0, end: 9, text: "Our Father, who art in heaven," },
+            { start: 9, end: 17, text: "Hallow be thy Name." },
+            { start: 17, end: 25, text: "Thy kingdom come." },
+            { start: 25, end: 35, text: "Thy will be done,<br>on earth as it is in heaven." },
+            { start: 35, end: 45, text: "Give us this day our daily bread." },
+            { start: 45, end: 55, text: "And forgive us our sins," },
+            { start: 55, end: 68, text: "As we forgive those who sin against us." },
+            { start: 68, end: 78, text: "And lead us not into temptation," },
+            { start: 78, end: 88, text: "But deliver us from evil." },
+            { start: 88, end: 100, text: "For yours is the kingdom,<br>and the power, and the glory,<br>for ever and ever. Amen." }
+        ];
+
+        // --- DOM Elements ---
+        const audio = document.getElementById('audio');
+        const btnPlayPause = document.getElementById('btn-play-pause');
+        const btnRestart = document.getElementById('btn-restart');
+        const iconPlay = document.getElementById('icon-play');
+        const iconPause = document.getElementById('icon-pause');
+        const lyricText = document.getElementById('current-verse');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const fileUpload = document.getElementById('file-upload');
+        const canvas = document.getElementById('visualizer');
+        const ctx = canvas.getContext('2d');
+        const uploadLabel = document.querySelector('label[for="file-upload"]');
+
+        // --- State ---
+        let audioContext;
+        let analyser;
+        let source;
+        let isPlaying = false;
+        let animationId;
+
+        // --- Audio Logic ---
+        
+        // Initialize Web Audio API (Must be triggered by user interaction)
+        function initAudioContext() {
+            if (!audioContext) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioContext = new AudioContext();
+                
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256; // Controls bar detail (values: 32, 64, 128, 256, etc.)
+                
+                // Connect audio element to analyser
+                try {
+                    // Create MediaElementSource only once to prevent errors
+                    if (!source) {
+                        source = audioContext.createMediaElementSource(audio);
+                        source.connect(analyser);
+                        analyser.connect(audioContext.destination);
+                    }
+                } catch (e) {
+                    console.warn("CORS/Source Error: Visualizer might not work with local files unless served via HTTP or file loaded manually.", e);
+                }
+            }
+            // Ensure context is running (browsers suspend it initially)
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        }
+
+        // Toggle Play/Pause with Error Handling
+        function togglePlay() {
+            initAudioContext();
+            
+            if (audio.paused) {
+                const playPromise = audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        isPlaying = true;
+                        iconPlay.classList.add('hidden');
+                        iconPause.classList.remove('hidden');
+                        visualize();
+                        // Reset error styling if it was there
+                        lyricText.classList.remove('text-red-400');
+                        uploadLabel.classList.remove('text-red-400', 'font-bold');
+                    })
+                    .catch(error => {
+                        console.error("Playback failed:", error);
+                        // User friendly error message
+                        lyricText.innerHTML = "Audio file not found.<br>Please select 'give_us_this_day.mp3' manually below.";
+                        lyricText.classList.add('active', 'text-red-400');
+                        uploadLabel.classList.add('text-red-400', 'font-bold');
+                    });
+                }
+            } else {
+                audio.pause();
+                isPlaying = false;
+                iconPlay.classList.remove('hidden');
+                iconPause.classList.add('hidden');
+                cancelAnimationFrame(animationId);
+            }
+        }
+
+        // Restart
+        function restartAudio() {
+            audio.currentTime = 0;
+            if (!isPlaying) {
+                togglePlay();
+            } else {
+                // Also wrap this play call just in case
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => console.error("Restart play error:", e));
+                }
+            }
+            updateLyrics();
+        }
+
+        // --- Visualizer Logic ---
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function visualize() {
+            if (!analyser) return;
+
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function draw() {
+                if (!isPlaying) return; // Stop drawing if paused
+                
+                animationId = requestAnimationFrame(draw);
+                analyser.getByteFrequencyData(dataArray);
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const barWidth = (canvas.width / bufferLength) * 2.5;
+                let barHeight;
+                let x = 0;
+
+                // Center the visualizer vertically
+                const cy = canvas.height / 2;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    barHeight = dataArray[i] * 1.5; // Scale height
+
+                    // Create gradient
+                    const gradient = ctx.createLinearGradient(0, cy - barHeight/2, 0, cy + barHeight/2);
+                    gradient.addColorStop(0, 'rgba(99, 102, 241, 0)'); // Indigo faded
+                    gradient.addColorStop(0.5, 'rgba(165, 180, 252, 0.8)'); // Light Indigo
+                    gradient.addColorStop(1, 'rgba(99, 102, 241, 0)'); 
+
+                    ctx.fillStyle = gradient;
+                    
+                    // Draw mirrored bars
+                    // Top half
+                    ctx.fillRect(x, cy - barHeight / 2, barWidth, barHeight);
+                    
+                    x += barWidth + 1;
+                }
+            }
+            draw();
+        }
+
+        // --- Lyrics & Progress Logic ---
+        function updateLyrics() {
+            const currentTime = audio.currentTime;
+            
+            // Update Progress Bar
+            const progressPercent = (currentTime / audio.duration) * 100;
+            if(audio.duration) {
+                progressBar.style.width = `${progressPercent}%`;
+            }
+
+            // Find current verse
+            const currentVerse = VERSES.find(v => currentTime >= v.start && currentTime < v.end);
+
+            if (currentVerse) {
+                if (lyricText.innerHTML !== currentVerse.text && !lyricText.classList.contains('text-red-400')) {
+                    // Fade out
+                    lyricText.classList.remove('active');
+                    
+                    setTimeout(() => {
+                        lyricText.innerHTML = currentVerse.text;
+                        lyricText.classList.add('active');
+                    }, 500); // Wait for fade out
+                }
+            } else if (currentTime >= TOTAL_DURATION_SEC) {
+                 lyricText.innerHTML = "";
+            }
+        }
+
+        // --- Event Listeners ---
+
+        // Error Handling for Audio Element Source
+        audio.addEventListener('error', (e) => {
+            console.error("Audio Source Error:", e);
+            // Don't show error immediately on load, only if they try to interact or if it fails hard
+        });
+
+        // Audio Time Update
+        audio.addEventListener('timeupdate', updateLyrics);
+
+        // Audio Ended
+        audio.addEventListener('ended', () => {
+            isPlaying = false;
+            iconPlay.classList.remove('hidden');
+            iconPause.classList.add('hidden');
+            cancelAnimationFrame(animationId);
+            lyricText.innerHTML = "Amen.";
+            progressBar.style.width = '100%';
+        });
+
+        // Buttons
+        btnPlayPause.addEventListener('click', togglePlay);
+        btnRestart.addEventListener('click', restartAudio);
+
+        // Click on progress bar to seek
+        progressContainer.addEventListener('click', (e) => {
+            const width = progressContainer.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audio.duration;
+            if (duration) {
+                audio.currentTime = (clickX / width) * duration;
+            }
+        });
+
+        // File Upload Fallback
+        fileUpload.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                audio.src = url;
+                audio.load();
+                
+                // Clear error states
+                lyricText.classList.remove('text-red-400');
+                uploadLabel.classList.remove('text-red-400', 'font-bold');
+                
+                lyricText.innerHTML = "File Loaded. Press Play.";
+                lyricText.classList.add('active');
+                
+                // Reset audio context logic
+                isPlaying = false;
+                iconPlay.classList.remove('hidden');
+                iconPause.classList.add('hidden');
+            }
+        });
+
+        // Initial state
+        setTimeout(() => lyricText.classList.add('active'), 100);
+
+    </script>
 </body>
 </html>
