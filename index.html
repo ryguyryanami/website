@@ -44,6 +44,54 @@
             width: 22%; /* Slightly smaller than 25% to allow for gap/padding */
             min-width: 65px; /* Ensure they don't get too small */
         }
+        /* Style for simple rounded links in Stream/Social and unnumbered Interactive */
+        .simple-link {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            border: 2px solid #f97316; 
+            background-color: white; 
+            color: #1f2937; 
+            transition: all 0.15s ease-in-out;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .simple-link:hover {
+            background-color: #fff7ed; 
+            color: #f97316; 
+        }
+        /* Style for two-line interactive links */
+        .two-line-link {
+             width: 100%;
+             display: flex;
+             flex-direction: column;
+             justify-content: center;
+             align-items: center;
+             padding: 0.75rem 1.5rem;
+             border-radius: 9999px;
+             border: 2px solid #f97316; 
+             background-color: white; 
+             color: #1f2937; 
+             transition: all 0.15s ease-in-out;
+             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+             text-align: center;
+        }
+        .two-line-link:hover {
+            background-color: #fff7ed; 
+            color: #f97316; 
+        }
+        .two-line-link .main-title {
+            font-weight: 700;
+            color: #f97316;
+            line-height: 1.2;
+        }
+        .two-line-link .sub-title {
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.2;
+            color: #4b5563; /* gray-600 */
+        }
     </style>
 </head>
 <body class="min-h-screen antialiased">
@@ -130,7 +178,7 @@
                                 <span class="w-8 text-orange-600 font-mono">05.</span>
                                 <span class="flex-grow ml-4">We are not alone</span>
                                 <span class="text-gray-500">03:13</span>
-                            </li>
+                            </span
                         </ul>
                     </div>
                 </div>
@@ -247,49 +295,49 @@
             <div class="max-w-sm mx-auto flex flex-col items-center">
                 <div class="w-full space-y-3 px-4 md:px-0">
                     
-                    <!-- Streaming Links (Alphabetized) -->
+                    <!-- Streaming Links (Alphabetized and UNNUMBERED) -->
                     <h3 class="text-xl font-semibold text-gray-800 text-center mb-4 border-b border-orange-200 pb-2">Streaming Platforms</h3>
 
                     <!-- Amazon Music -->
-                    <a href="https://music.amazon.com/albums/B0G3KXLZJF" target="_blank" title="Amazon Music" class="w-full inline-block text-center text-lg font-medium py-3 px-6 rounded-full bg-white text-gray-800 border-2 border-orange-500 hover:bg-orange-50 hover:text-orange-600 transition shadow-md">
+                    <a href="https://music.amazon.com/albums/B0G3KXLZJF" target="_blank" title="Amazon Music" class="simple-link">
                         Amazon Music
                     </a>
                     
                     <!-- Apple Music -->
-                    <a href="https://music.apple.com/us/album/all-i-ever-wanted-ep-ep/1855956963?uo=4" target="_blank" class="w-full inline-block text-center text-lg font-medium py-3 px-6 rounded-full bg-white text-gray-800 border-2 border-orange-500 hover:bg-orange-50 hover:text-orange-600 transition shadow-md">
+                    <a href="https://music.apple.com/us/album/all-i-ever-wanted-ep-ep/1855956963?uo=4" target="_blank" class="simple-link">
                         Apple Music
                     </a>
                     
                     <!-- Bandcamp -->
-                    <a href="https://ryguyryanami.bandcamp.com/" target="_blank" title="Bandcamp" class="w-full inline-block text-center text-lg font-medium py-3 px-6 rounded-full bg-white text-gray-800 border-2 border-orange-500 hover:bg-orange-50 hover:text-orange-600 transition shadow-md">
+                    <a href="https://ryguyryanami.bandcamp.com/" target="_blank" title="Bandcamp" class="simple-link">
                         Bandcamp
                     </a>
                     
                     <!-- Deezer -->
-                    <a href="https://www.deezer.com/en/album/862239822" target="_blank" title="Deezer" class="w-full inline-block text-center text-lg font-medium py-3 px-6 rounded-full bg-white text-gray-800 border-2 border-orange-500 hover:bg-orange-50 hover:text-orange-600 transition shadow-md">
+                    <a href="https://www.deezer.com/en/album/862239822" target="_blank" title="Deezer" class="simple-link">
                         Deezer
                     </a>
                     
                     <!-- Spotify -->
-                    <a href="https://open.spotify.com/album/6sogScOspCHSlVrGS2y1Nr" target="_blank" class="w-full inline-block text-center text-lg font-medium py-3 px-6 rounded-full bg-white text-gray-800 border-2 border-orange-500 hover:bg-orange-50 hover:text-orange-600 transition shadow-md">
+                    <a href="https://open.spotify.com/album/6sogScOspCHSlVrGS2y1Nr" target="_blank" class="simple-link">
                         Spotify
                     </a>
                     
                     <!-- YouTube Music / YouTube -->
-                    <a href="https://music.youtube.com/channel/UCtZgeu_Rt_e_OtyVWfRgecg" target="_blank" title="YouTube Music / YouTube" class="w-full inline-block text-center text-lg font-medium py-3 px-6 rounded-full bg-white text-gray-800 border-2 border-orange-500 hover:bg-orange-50 hover:text-orange-600 transition shadow-md">
+                    <a href="https://music.youtube.com/channel/UCtZgeu_Rt_e_OtyVWfRgecg" target="_blank" title="YouTube Music / YouTube" class="simple-link">
                         YouTube Music
                     </a>
 
-                    <!-- Social Links (Alphabetized) -->
+                    <!-- Social Links (Alphabetized and UNNUMBERED) -->
                     <h3 class="text-xl font-semibold text-gray-800 text-center mt-8 mb-4 border-b border-orange-200 pb-2">Social</h3>
 
                     <!-- Instagram -->
-                    <a href="https://instagram.com/ryguyryanami" target="_blank" title="Instagram" class="w-full inline-block text-center text-lg font-medium py-3 px-6 rounded-full bg-white text-gray-800 border-2 border-orange-500 hover:bg-orange-50 hover:text-orange-600 transition shadow-md">
+                    <a href="https://instagram.com/ryguyryanami" target="_blank" title="Instagram" class="simple-link">
                         Instagram
                     </a>
                     
                     <!-- TikTok -->
-                    <a href="https://www.tiktok.com/@ryguyryanami" target="_blank" title="TikTok" class="w-full inline-block text-center text-lg font-medium py-3 px-6 rounded-full bg-white text-gray-800 border-2 border-orange-500 hover:bg-orange-50 hover:text-orange-600 transition shadow-md">
+                    <a href="https://www.tiktok.com/@ryguyryanami" target="_blank" title="TikTok" class="simple-link">
                         TikTok
                     </a>
                     
@@ -297,34 +345,47 @@
             </div>
         </section>
 
-        <!-- NEW INTERACTIVE CONTENT SECTION -->
+        <!-- INTERACTIVE CONTENT SECTION (Links Reordered and Renamed) -->
         <section id="interactive" class="py-16 md:py-24 bg-white text-center border-t border-gray-200">
             <h2 class="text-3xl font-bold text-gray-900 mb-8">Interactive Content</h2>
             
             <div class="max-w-sm mx-auto flex flex-col items-center">
                 <div class="w-full space-y-3 px-4 md:px-0">
                     
-                    <!-- Guynami Generator -->
-                    <a href="./guynami-generator.html" target="_blank" title="Guynami Generator" class="w-full inline-block text-center text-lg font-medium py-3 px-6 rounded-full bg-white text-gray-800 border-2 border-orange-500 hover:bg-orange-50 hover:text-orange-600 transition shadow-md">
-                        Guynami Generator
+                    <!-- 0. Guynami Generator (Simple Link) -->
+                    <a href="./guynami-generator.html" target="_blank" title="Guynami Generator" class="simple-link">
+                         Guynami Generator
                     </a>
 
-                    <!-- Game of Life -->
-                    <a href="./game_of_life.html" target="_blank" title="Game of Life" class="w-full inline-block text-center text-lg font-medium py-3 px-6 rounded-full bg-white text-gray-800 border-2 border-orange-500 hover:bg-orange-50 hover:text-orange-600 transition shadow-md">
-                        Game of Life
+                    <!-- 1. Meditation - Give us this day -->
+                    <a href="./game_give_us_this_day.html" target="_blank" title="1. Meditation - Give us this day" class="two-line-link">
+                        <span class="main-title">1. Meditation</span>
+                        <span class="sub-title">Give us this day</span>
+                    </a>
+                    
+                    <!-- 2. Simulation - Everything is gonna be alright -->
+                    <a href="./game_everything_gonna_be_alright.html" target="_blank" title="2. Simulation - Everything is gonna be alright" class="two-line-link">
+                        <span class="main-title">2. Simulation</span>
+                        <span class="sub-title">Everything is gonna be alright</span>
+                    </a>
+                    
+                    <!-- 3. Choose your own adventure - Life is a game -->
+                    <a href="./game_of_life.html" target="_blank" title="3. Choose your own adventure - Life is a game" class="two-line-link">
+                        <span class="main-title">3. Choose your own adventure</span>
+                        <span class="sub-title">Life is a game</span>
                     </a>
                     
                 </div>
             </div>
         </section>
 
-        <!-- NEW CONTACT SECTION (Moved to absolute bottom) -->
+        <!-- CONTACT SECTION (Moved to absolute bottom) -->
         <section id="contact" class="py-16 md:py-24 bg-gray-100 text-center border-t border-gray-200">
             <h2 class="text-3xl font-bold text-gray-900 mb-8">Contact</h2>
 
             <div class="max-w-sm mx-auto flex flex-col items-center">
                 <div class="w-full space-y-3 px-4 md:px-0">
-                    <a href="mailto:ryguyryanami@gmail.com" title="Email RyGuy Ryanami" class="w-full inline-block text-center text-lg font-medium py-3 px-6 rounded-full bg-white text-gray-800 border-2 border-orange-500 hover:bg-orange-50 hover:text-orange-600 transition shadow-md">
+                    <a href="mailto:ryguyryanami@gmail.com" title="Email RyGuy Ryanami" class="simple-link">
                         ryguyryanami@gmail.com
                     </a>
                 </div>
