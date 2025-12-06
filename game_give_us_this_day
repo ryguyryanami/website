@@ -131,7 +131,7 @@
         // *** CONFIGURATION ***
         // REPLACE THIS STRING WITH YOUR AUDIO FILE URL
         // Example: 'audio/prayer.mp3' or 'https://mysite.com/song.wav'
-        const AUDIO_URL = 'give_us_this_day.wav'; 
+        const AUDIO_URL = 'give_us_this_day.mp3'; 
         
         const TOTAL_DURATION_SEC = 100; // 1 minute 40 seconds
         
