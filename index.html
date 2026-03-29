@@ -125,8 +125,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <a href="#home" class="text-xl font-black text-gray-900 tracking-tighter hover:text-orange-600 transition">RYGUY RYANAMI</a>
             <nav class="flex items-center space-x-3 sm:space-x-6">
-                <a href="#ep" class="text-gray-600 hover:text-orange-600 text-sm font-medium transition">EP</a>
                 <a href="#album" class="text-gray-600 hover:text-orange-600 text-sm font-medium transition">ALBUM</a>
+                <a href="#ep" class="text-gray-600 hover:text-orange-600 text-sm font-medium transition">EP</a>
                 <a href="#live" class="text-gray-600 hover:text-orange-600 text-sm font-medium transition">LIVE</a>
                 <a href="#social" class="text-gray-600 hover:text-orange-600 text-sm font-medium transition">STREAM</a>
                 <a href="#interactive" class="text-orange-600 hover:bg-orange-600 hover:text-white text-xs sm:text-sm font-bold border-2 border-orange-500 rounded-full px-4 py-1.5 transition">INTERACTIVE</a>
@@ -151,7 +151,61 @@
             </div>
         </section>
 
-        <!-- Current EP Section -->
+        
+
+ 
+
+        <!-- Upcoming Album Section with Countdown -->
+        <section id="album" class="py-20 md:py-32 bg-white text-center border-t border-gray-200">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <span class="inline-block px-4 py-1 bg-orange-100 text-orange-600 rounded-full font-bold text-sm uppercase tracking-widest mb-6">The Debut Full-Length</span>
+                <h2 class="text-5xl md:text-7xl font-black text-gray-900 mb-8 uppercase tracking-tighter leading-tight">
+                    EVERYTHING IS GONNA BE <span class="text-orange-600">ALRIGHT!</span>
+                </h2>
+
+                
+
+                <div class="mb-16 grid gap-12 lg:grid-cols-[minmax(350px,380px)_1fr] items-center">
+                    <div class="mx-auto">
+                        <iframe style="border: 0; width: 350px; height: 786px;" src="https://bandcamp.com/EmbeddedPlayer/album=633547640/size=large/bgcol=ffffff/linkcol=0687f5/transparent=true/" seamless>
+                            <a href="https://ryguyryanami.bandcamp.com/album/everything-is-gonna-be-alright">Everything is gonna be alright! by Ryguy Ryanami</a>
+                        </iframe>
+                    </div>
+                    <div class="text-center">
+                        <div class="max-w-xl mx-auto">
+                            <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                                An enlightening, invigorating, revitalizing, vivifying, enlivening, stimulating, and electrifying 13-track journey into the depths of what it means to live a good life. This album is intended to accompany prayer, laughter, reflection, tears, good food, and dance, all at the same time! Whistle and sing along to an array of eclectic melodies, and get lost in the cornucopia of harmonies begotten by the unique Ryanami voice. Focus on the present moment, grab a glass of wine, say a prayer of gratitude, round up your friends (maybe even someone to smooch!), and take upon yourself the Ryanami posture of being fully alive. Enjoy!
+                            </p>
+                            <p class="text-sm text-gray-500 italic">Full-length debut album now available on Bandcamp and all streaming platforms. Listen to the full release and feel the moment.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="countdown" class="flex flex-wrap justify-center gap-4 md:gap-8 mb-6">
+                    <div class="countdown-item p-4 bg-white rounded-2xl shadow-xl border border-gray-100">
+                        <span id="days" class="countdown-digit block text-5xl md:text-7xl font-black text-orange-500">00</span>
+                        <span class="block text-xs uppercase font-bold text-gray-400 tracking-widest mt-2">Days</span>
+                    </div>
+                    <div class="countdown-item p-4 bg-white rounded-2xl shadow-xl border border-gray-100">
+                        <span id="hours" class="countdown-digit block text-5xl md:text-7xl font-black text-orange-500">00</span>
+                        <span class="block text-xs uppercase font-bold text-gray-400 tracking-widest mt-2">Hours</span>
+                    </div>
+                    <div class="countdown-item p-4 bg-white rounded-2xl shadow-xl border border-gray-100">
+                        <span id="minutes" class="countdown-digit block text-5xl md:text-7xl font-black text-orange-500">00</span>
+                        <span class="block text-xs uppercase font-bold text-gray-400 tracking-widest mt-2">Mins</span>
+                    </div>
+                    <div class="countdown-item p-4 bg-white rounded-2xl shadow-xl border border-gray-100">
+                        <span id="seconds" class="countdown-digit block text-5xl md:text-7xl font-black text-orange-500">00</span>
+                        <span class="block text-xs uppercase font-bold text-gray-400 tracking-widest mt-2">Secs</span>
+                    </div>
+                </div>
+                
+                <p class="text-xl text-gray-900 font-black mt-8" id="release-date-text"></p>
+            </div>
+        </section>
+
+               <!-- Current EP Section -->
         <section id="ep" class="py-20 md:py-32 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-4xl md:text-5xl font-black text-center text-gray-900 mb-16 tracking-tight">ALL I EVER WANTED EP</h2>
@@ -202,139 +256,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Upcoming Album Section with Countdown -->
-        <section id="album" class="py-20 md:py-32 bg-white text-center border-t border-gray-200">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <span class="inline-block px-4 py-1 bg-orange-100 text-orange-600 rounded-full font-bold text-sm uppercase tracking-widest mb-6">The Debut Full-Length</span>
-                <h2 class="text-5xl md:text-7xl font-black text-gray-900 mb-8 uppercase tracking-tighter leading-tight">
-                    EVERYTHING IS GONNA BE <span class="text-orange-600">ALRIGHT!</span>
-                </h2>
-
-                <div class="mb-12 flex justify-center">
-                    <div class="relative w-full max-w-md aspect-square bg-gray-50 rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex items-center justify-center group">
-                        <img src="assets/images/ALBUM ART - EVERYTHING IS GONNA BE ALRIGHT.png" 
-                             alt="Everything is gonna be alright! Album Art" 
-                             class="absolute inset-0 w-full h-full object-cover z-10"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        
-                        <div class="hidden flex-col items-center justify-center text-gray-400 p-8 text-center bg-gray-50 h-full w-full">
-                            <div class="w-24 h-24 mb-6 rounded-full bg-orange-100 flex items-center justify-center text-orange-500">
-                                <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-7c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z"/>
-                                </svg>
-                            </div>
-                            <p class="font-black text-gray-800 text-xl uppercase tracking-tighter leading-none mb-2">Artwork Pending</p>
-                            <p class="text-sm font-medium text-gray-500 italic">"Everything is gonna be alright!"</p>
-                            <div class="mt-6 w-12 h-1 bg-orange-500 rounded-full"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <p class="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-                    An enlightening, invigorating, revitalizing, vivifying, enlivening, stimulating, and electrifying 13-track journey into the depths of what it means to live a good life. This album is intended to accompany prayer, laughter, reflection, tears, good food, and dance, all at the same time! Whistle and sing along to an array of eclectic melodies, and get lost in the cornucopia of harmonies begotten by the unique Ryanami voice. Focus on the present moment, grab a glass of wine, say a prayer of gratitude, round up your friends (maybe even someone to smooch!), and take upon yourself the Ryanami posture of being fully alive. Enjoy!
-                </p>
-
-                <div class="mb-16 max-w-2xl mx-auto">
-                    <div class="bg-gray-50 rounded-2xl p-8 border border-gray-200 shadow-inner">
-                        <div class="flex justify-between items-end mb-6 border-b border-gray-200 pb-2">
-                            <h3 class="text-2xl font-bold text-gray-800 text-left">Album Tracks</h3>
-                            <span class="text-gray-500 font-mono text-sm mb-1">Total Time: 38:40</span>
-                        </div>
-                        <div class="h-80 overflow-y-auto pr-4 custom-scrollbar text-left">
-                            <ul class="space-y-4">
-                                <li class="flex items-center py-1">
-                                    <span class="w-8 text-orange-500 font-mono">01.</span> 
-                                    <span class="ml-4 font-medium flex-grow">Give us this day</span>
-                                    <span class="text-gray-400 text-sm font-mono">01:41</span>
-                                </li>
-                                <li class="flex items-center py-1 font-bold text-orange-600">
-                                    <span class="w-8 font-mono">02.</span> 
-                                    <span class="ml-4 flex-grow">Everything is gonna be alright!</span>
-                                    <span class="text-orange-400 text-sm font-mono">03:04</span>
-                                </li>
-                                <li class="flex items-center py-1">
-                                    <span class="w-8 text-orange-500 font-mono">03.</span> 
-                                    <span class="ml-4 font-medium flex-grow">Could it happen to me</span>
-                                    <span class="text-gray-400 text-sm font-mono">00:51</span>
-                                </li>
-                                <li class="flex items-center py-1">
-                                    <span class="w-8 text-orange-500 font-mono">04.</span> 
-                                    <span class="ml-4 font-medium flex-grow">Life is a game</span>
-                                    <span class="text-gray-400 text-sm font-mono">04:12</span>
-                                </li>
-                                <li class="flex items-center py-1">
-                                    <span class="w-8 text-orange-500 font-mono">05.</span> 
-                                    <span class="ml-4 font-medium flex-grow">oh!</span>
-                                    <span class="text-gray-400 text-sm font-mono">01:10</span>
-                                </li>
-                                <li class="flex items-center py-1">
-                                    <span class="w-8 text-orange-500 font-mono">06.</span> 
-                                    <span class="ml-4 font-medium flex-grow">We are not alone</span>
-                                    <span class="text-gray-400 text-sm font-mono">03:11</span>
-                                </li>
-                                <li class="flex items-center py-1">
-                                    <span class="w-8 text-orange-500 font-mono">07.</span> 
-                                    <span class="ml-4 font-medium flex-grow">Seventh Heaven</span>
-                                    <span class="text-gray-400 text-sm font-mono">01:17</span>
-                                </li>
-                                <li class="flex items-center py-1">
-                                    <span class="w-8 text-orange-500 font-mono">08.</span> 
-                                    <span class="ml-4 font-medium flex-grow">¡Disfrutamos la vida!</span>
-                                    <span class="text-gray-400 text-sm font-mono">03:11</span>
-                                </li>
-                                <li class="flex items-center py-1">
-                                    <span class="w-8 text-orange-500 font-mono">09.</span> 
-                                    <span class="ml-4 font-medium flex-grow">All I ever wanted</span>
-                                    <span class="text-gray-400 text-sm font-mono">03:36</span>
-                                </li>
-                                <li class="flex items-center py-1">
-                                    <span class="w-8 text-orange-500 font-mono">10.</span> 
-                                    <span class="ml-4 font-medium flex-grow">Deep Creek</span>
-                                    <span class="text-gray-400 text-sm font-mono">02:02</span>
-                                </li>
-                                <li class="flex items-center py-1">
-                                    <span class="w-8 text-orange-500 font-mono">11.</span> 
-                                    <span class="ml-4 font-medium flex-grow">Parker, Arizona</span>
-                                    <span class="text-gray-400 text-sm font-mono">04:10</span>
-                                </li>
-                                <li class="flex items-center py-1">
-                                    <span class="w-8 text-orange-500 font-mono">12.</span> 
-                                    <span class="ml-4 font-medium flex-grow">All I ever wanted (My time to dine!)</span>
-                                    <span class="text-gray-400 text-sm font-mono">06:38</span>
-                                </li>
-                                <li class="flex items-center py-1">
-                                    <span class="w-8 text-orange-500 font-mono">13.</span> 
-                                    <span class="ml-4 font-medium flex-grow">Brimming inside</span>
-                                    <span class="text-gray-400 text-sm font-mono">03:37</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="countdown" class="flex flex-wrap justify-center gap-4 md:gap-8 mb-6">
-                    <div class="countdown-item p-4 bg-white rounded-2xl shadow-xl border border-gray-100">
-                        <span id="days" class="countdown-digit block text-5xl md:text-7xl font-black text-orange-500">00</span>
-                        <span class="block text-xs uppercase font-bold text-gray-400 tracking-widest mt-2">Days</span>
-                    </div>
-                    <div class="countdown-item p-4 bg-white rounded-2xl shadow-xl border border-gray-100">
-                        <span id="hours" class="countdown-digit block text-5xl md:text-7xl font-black text-orange-500">00</span>
-                        <span class="block text-xs uppercase font-bold text-gray-400 tracking-widest mt-2">Hours</span>
-                    </div>
-                    <div class="countdown-item p-4 bg-white rounded-2xl shadow-xl border border-gray-100">
-                        <span id="minutes" class="countdown-digit block text-5xl md:text-7xl font-black text-orange-500">00</span>
-                        <span class="block text-xs uppercase font-bold text-gray-400 tracking-widest mt-2">Mins</span>
-                    </div>
-                    <div class="countdown-item p-4 bg-white rounded-2xl shadow-xl border border-gray-100">
-                        <span id="seconds" class="countdown-digit block text-5xl md:text-7xl font-black text-orange-500">00</span>
-                        <span class="block text-xs uppercase font-bold text-gray-400 tracking-widest mt-2">Secs</span>
-                    </div>
-                </div>
-                
-                <p class="text-xl text-gray-900 font-black mt-8" id="release-date-text"></p>
             </div>
         </section>
 
@@ -389,11 +310,11 @@
                 <div>
                     <h3 class="text-sm font-black text-orange-600 uppercase tracking-widest mb-6 border-b-2 border-orange-100 pb-2 inline-block">Streaming Platforms</h3>
                     <div class="space-y-3">
-                        <a href="https://open.spotify.com/album/6sogScOspCHSlVrGS2y1Nr" target="_blank" class="simple-link">Spotify</a>
-                        <a href="https://music.apple.com/us/album/all-i-ever-wanted-ep-ep/1855956963" target="_blank" class="simple-link">Apple Music</a>
+                        <a href="https://open.spotify.com/artist/6QIY7xJeqOOSVQUPHJPDh0" target="_blank" class="simple-link">Spotify</a>
+                        <a href="https://music.apple.com/us/artist/ryguy-ryanami/1855206295" target="_blank" class="simple-link">Apple Music</a>
                         <a href="https://music.youtube.com/channel/UCtZgeu_Rt_e_OtyVWfRgecg" target="_blank" class="simple-link">YouTube Music</a>
                         <a href="https://ryguyryanami.bandcamp.com/" target="_blank" class="simple-link">Bandcamp</a>
-                        <a href="https://music.amazon.com/albums/B0G3KXLZJF" target="_blank" class="simple-link text-sm">Amazon Music</a>
+                        <a href="https://music.amazon.com/artists/B0G3KS9842/ryguy-ryanami" target="_blank" class="simple-link text-sm">Amazon Music</a>
                         <a href="https://www.deezer.com/en/album/862239822" target="_blank" class="simple-link text-sm">Deezer</a>
                     </div>
                 </div>
@@ -403,6 +324,7 @@
                     <div class="space-y-3">
                         <a href="https://instagram.com/ryguyryanami" target="_blank" class="simple-link">Instagram</a>
                         <a href="https://www.tiktok.com/@ryguyryanami" target="_blank" class="simple-link">TikTok</a>
+                        <a href="https://www.facebook.com/profile.php?id=61578452077813" target="_blank" class="simple-link">Facebook</a>
                     </div>
                 </div>
             </div>
